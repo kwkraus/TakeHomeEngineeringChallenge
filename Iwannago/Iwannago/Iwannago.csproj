@@ -10,15 +10,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="DataFiles\fhv_tripdata_2018-01.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.6.0" />
     <PackageReference Include="CsvHelper" Version="12.1.2" />
     <PackageReference Include="ShellProgressBar" Version="4.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DataFiles\" />
   </ItemGroup>
 
 </Project>
