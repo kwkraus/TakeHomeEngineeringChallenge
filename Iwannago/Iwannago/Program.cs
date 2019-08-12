@@ -1,42 +1,56 @@
-﻿using CommandLine;
-using CsvHelper;
+﻿using CsvHelper;
+using Iwannago.Options;
+using Iwannago.Services;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using NLog;
+using NLog.Extensions.Logging;
 using ShellProgressBar;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Reflection.Metadata.Ecma335;
-using System.Threading;
 
 namespace Iwannago
 {
     class Program
     {
-        [Verb("import", HelpText = "Import Taxi data for searching.")]
-        class ImportOptions
+        static void Main(string[] args)
         {
-            //commit options here
-        }
-        [Verb("go", HelpText = "Runs the go command for a start/end borough combination.")]
-        class GoOptions
-        {
-            [Option('f', "From", Required = true, HelpText = "Name of Borough to start from.")]
-            public bool From { get; set; }
+            var logger = LogManager.GetCurrentClassLogger();
+            try
+            {
+                var config = new ConfigurationBuilder()
+                   .SetBasePath(System.IO.Directory.GetCurrentDirectory())
+                   .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                   .Build();
 
-            [Option('t', "To", Required = true, HelpText = "Name of Borough to end at.")]
-            public bool To { get; set; }
+                var servicesProvider = BuildDi(config);
+                using (servicesProvider as IDisposable)
+                {
+                    var runner = servicesProvider.GetRequiredService<RunnerService>();
+                    runner.DoAction("Action1");
 
-            [Option('i', "In", Required = true, HelpText = "Type of taxi. 'YellowTaxi', 'GreenTaxi', 'ForHireTaxi'")]
-            public bool TaxiType { get; set; }
-        }
+                    Console.WriteLine("Press ANY key to exit");
+                    Console.ReadKey();
 
-
-        static int Main(string[] args)
-        {
-            return Parser.Default.ParseArguments<ImportOptions, GoOptions>(args)
-               .MapResult(
-                 (ImportOptions opts) => RunImportCommand(opts),
-                 (GoOptions opts) => RunGoCommand(opts),
-                 (IEnumerable<Error> errs) => 1);
+                    //return Parser.Default.ParseArguments<ImportOptions, InATaxiOptions>(args)
+                    //   .MapResult(
+                    //         (ImportOptions opts) => RunImportCommand(opts),
+                    //         (InATaxiOptions opts) => RunGoCommand(opts),
+                    //         (IEnumerable<Error> errs) => 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                // NLog: catch any exception and log it.
+                logger.Error(ex, "Stopped program because of exception");
+                throw;
+            }
+            finally
+            {
+                // Ensure to flush and stop internal timers/threads before application-exit (Avoid segmentation fault on Linux)
+                LogManager.Shutdown();
+            }
         }
 
         static int RunImportCommand(ImportOptions opts)
@@ -72,10 +86,24 @@ namespace Iwannago
             return 0;
         }
 
-        static int RunGoCommand(GoOptions opts)
+        static int RunGoCommand(InATaxiOptions opts)
         {
             Console.WriteLine("Go was entered");
             return 0;
+        }
+
+        private static IServiceProvider BuildDi(IConfiguration config)
+        {
+            return new ServiceCollection()
+               .AddTransient<RunnerService>() // Runner is the custom class
+               .AddLogging(loggingBuilder =>
+               {
+          // configure Logging with NLog
+          loggingBuilder.ClearProviders();
+                   loggingBuilder.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+                   loggingBuilder.AddNLog(config);
+               })
+               .BuildServiceProvider();
         }
     }
 }
