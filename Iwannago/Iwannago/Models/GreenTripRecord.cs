@@ -5,8 +5,8 @@ namespace Iwannago.Models
     class GreenTripRecord
     {
         public string VendorID { get; set; }
-        public DateTime lpep_pickup_datetime { get; set; }
-        public DateTime lpep_dropoff_datetime { get; set; }
+        public string lpep_pickup_datetime { get; set; }
+        public string lpep_dropoff_datetime { get; set; }
         public string store_and_fwd_flag { get; set; }
         public int RatecodeID { get; set; }
         public int PULocationID { get; set; }

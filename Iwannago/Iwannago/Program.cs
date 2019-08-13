@@ -56,12 +56,14 @@ namespace Iwannago
 
         static int RunImportCommand(ImportOptions options, ITaxiDataImportService importSvc)
         {
+            //validate input
             if (options is null)
                 throw new ArgumentNullException(nameof(options));
             
             if (importSvc is null)
                 throw new ArgumentNullException(nameof(importSvc));
 
+            //check what user entered for TaxiType and load appropriate dataset
             switch(options.TaxiType.ToLower())
             {
                 case "fhv":

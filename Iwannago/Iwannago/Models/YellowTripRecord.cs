@@ -5,8 +5,8 @@ namespace Iwannago.Models
     public class YellowTripRecord 
     {
         public string VendorID { get; set; }
-        public DateTime tpep_pickup_datetime { get; set; }
-        public DateTime tpep_dropoff_datetime { get; set; }
+        public string tpep_pickup_datetime { get; set; }
+        public string tpep_dropoff_datetime { get; set; }
         public int passenger_count { get; set; }
         public decimal trip_distance { get; set; }
         public int RatecodeID { get; set; }
