@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Iwannago
+namespace Iwannago.Models
 {
-    public class TripRecord
+    public class FHVTripRecord
     {
-        //"Dispatching_base_num","Pickup_DateTime","DropOff_datetime","PUlocationID","DOlocationID","SR_Flag"
         public string Dispatching_base_num { get; set; }
         public DateTime Pickup_DateTime { get; set; }
         public DateTime DropOff_datetime { get; set; }

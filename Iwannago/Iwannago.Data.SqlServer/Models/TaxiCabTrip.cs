@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Iwannago.Data.Core.Models;
+using System;
 
-namespace Iwannago.Data.SqlServer.Models
+namespace Iwannago.Data.EntityFrameworkCore.Models
 {
-    public class TaxiCabTrip
+    public class TaxiCabTrip : BaseEntity
     {
-        public Guid Id { get; set; }
         public string TaxiType { get; set; }
         public string VendorID { get; set; }
         public DateTime pickup_datetime { get; set; }

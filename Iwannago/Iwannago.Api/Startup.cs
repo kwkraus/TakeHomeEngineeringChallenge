@@ -1,4 +1,4 @@
-﻿using Iwannago.Data.SqlServer.Contexts;
+﻿using Iwannago.Data.EntityFrameworkCore.Contexts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;

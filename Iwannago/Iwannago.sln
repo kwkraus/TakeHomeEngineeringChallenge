@@ -5,13 +5,13 @@ VisualStudioVersion = 16.0.29123.88
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Iwannago", "Iwannago\Iwannago.csproj", "{2399403A-9A8E-42E5-A706-0F32F0C2ED43}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iwannago.Tests", "Iwannago.Tests\Iwannago.Tests.csproj", "{D5707ECB-6F8B-4E39-A421-A9982E628C57}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Iwannago.Tests", "Iwannago.Tests\Iwannago.Tests.csproj", "{D5707ECB-6F8B-4E39-A421-A9982E628C57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iwannago.Api", "Iwannago.Api\Iwannago.Api.csproj", "{3465FCFD-E4F9-4EBD-90AD-001E52AC7664}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Iwannago.Api", "Iwannago.Api\Iwannago.Api.csproj", "{3465FCFD-E4F9-4EBD-90AD-001E52AC7664}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iwannago.Data.SqlServer", "Iwannago.Data.SqlServer\Iwannago.Data.SqlServer.csproj", "{04FF5883-2960-4A92-AFB7-3A2883996F0E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Iwannago.Data.EntityFrameworkCore", "Iwannago.Data.SqlServer\Iwannago.Data.EntityFrameworkCore.csproj", "{04FF5883-2960-4A92-AFB7-3A2883996F0E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iwannago.Data.Core", "Iwannago.Data.Core\Iwannago.Data.Core.csproj", "{61A7EAD5-33C8-4BAB-A03F-87E02C438845}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Iwannago.Data.Core", "Iwannago.Data.Core\Iwannago.Data.Core.csproj", "{61A7EAD5-33C8-4BAB-A03F-87E02C438845}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

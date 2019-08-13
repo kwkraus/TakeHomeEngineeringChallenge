@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Iwannago.Data.Core\Iwannago.Data.Core.csproj" />
-    <ProjectReference Include="..\Iwannago.Data.SqlServer\Iwannago.Data.SqlServer.csproj" />
+    <ProjectReference Include="..\Iwannago.Data.SqlServer\Iwannago.Data.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
   <ItemGroup>
