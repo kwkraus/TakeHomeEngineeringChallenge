@@ -1,11 +1,10 @@
 ﻿using CommandLine;
-using CsvHelper;
 using Iwannago.Data.Core.Interfaces;
 using Iwannago.Data.EntityFrameworkCore.Contexts;
 using Iwannago.Data.EntityFrameworkCore.Models;
 using Iwannago.Data.EntityFrameworkCore.Repositories;
-using Iwannago.Models;
 using Iwannago.Options;
+using Iwannago.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,8 +13,6 @@ using NLog;
 using NLog.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
 namespace Iwannago
 {
@@ -35,10 +32,11 @@ namespace Iwannago
                 using (servicesProvider as IDisposable)
                 {
                     var repo = servicesProvider.GetRequiredService<IRepository<TaxiCabTrip>>();
+                    var importSvc = servicesProvider.GetRequiredService<ITaxiDataImportService>();
 
                     return Parser.Default.ParseArguments<ImportOptions, InATaxiOptions>(args)
                        .MapResult(
-                             (ImportOptions opts) => RunImportCommand(opts, repo, logger),
+                             (ImportOptions opts) => RunImportCommand(opts, importSvc),
                              (InATaxiOptions opts) => RunGoCommand(opts, repo, logger),
                              (IEnumerable<Error> errs) => 1);
                 }
@@ -56,61 +54,36 @@ namespace Iwannago
             }
         }
 
-        static int RunImportCommand(ImportOptions opts, IRepository<TaxiCabTrip> repo, Logger logger)
+        static int RunImportCommand(ImportOptions options, ITaxiDataImportService importSvc)
         {
-            var result = 0;
-            logger.Trace("Import was entered");
+            if (options is null)
+                throw new ArgumentNullException(nameof(options));
+            
+            if (importSvc is null)
+                throw new ArgumentNullException(nameof(importSvc));
 
-            using (var reader = new StreamReader($"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\DataFiles\\fhv_tripdata_2018-01.csv"))
-            using (var csv = new CsvReader(reader))
+            switch(options.TaxiType.ToLower())
             {
-                var records = csv.GetRecords<FHVTripRecord>();
+                case "fhv":
+                    importSvc.LoadForHireVehicle(options.Count);
+                    break;
 
-                foreach(var row in records.Take(1000))
-                {
-                    var id = Guid.NewGuid();
+                case "yellow":
+                    importSvc.LoadYellowTaxi(options.Count);
+                    break;
 
-                    var trip = new TaxiCabTrip
-                    {
-                        Id = id,
-                        TaxiType = "FHV",
-                        VendorID = row.Dispatching_base_num,
-                        pickup_datetime = row.Pickup_DateTime,
-                        dropoff_datetime = row.DropOff_datetime,
-                        DOLocationID = int.Parse(row.DOlocationID),
-                        PULocationID = int.Parse(row.PUlocationID),
-                        ehail_fee = default(string),
-                        fare_amount = default(decimal),
-                        tolls_amount = default(decimal),
-                        tip_amount = default(decimal),
-                        total_amount = default(decimal),
-                        trip_distance = default(int),
-                        mta_tax = default(decimal),
-                        store_and_fwd_flag = row.SR_Flag,
-                        extra = default(decimal),
-                        improvement_surcharge = default(decimal),
-                        passenger_count = default(int),
-                        payment_type = default(int),
-                        RatecodeID = default(int),
-                        trip_type = default(int)
-                    };
+                case "green":
+                    importSvc.LoadGreenTaxi(options.Count);
+                    break;
 
-                    repo.Insert(trip);
-
-                    var entity = repo.Get(id);
-
-                    result++;
-                    logger.Trace($"{result} - {entity.Id}-{entity.pickup_datetime}-{entity.dropoff_datetime}");
-
-                }
-
-                logger.Trace($"Total number of records={result}");
+                default:
+                    throw new ArgumentException($"Argument '{nameof(options.TaxiType)}'={options.TaxiType} is not a valid option.  Please refer to --help");
             }
 
             return 0;
         }
 
-        static int RunGoCommand(InATaxiOptions opts, IRepository<TaxiCabTrip> repof, Logger logger)
+        static int RunGoCommand(InATaxiOptions options, IRepository<TaxiCabTrip> repof, Logger logger)
         {
             logger.Info("Go was entered");
             return 0;
@@ -126,6 +99,7 @@ namespace Iwannago
                     options.UseSqlServer(connStr))
 
                 .AddTransient(typeof(IRepository<>), typeof(EFRepository<>))
+                .AddTransient(typeof(ITaxiDataImportService), typeof(CsvTaxiDataImportService))
                 .AddLogging(loggingBuilder =>
                 {
                     // configure Logging with NLog
