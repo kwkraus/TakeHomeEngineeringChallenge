@@ -6,3 +6,5 @@ https://github.com/seushermsft/Take-Home-Engineering-Challenge
 
 ## How it runs
 
+
+[![Build Status](https://dev.azure.com/kkraus/Take%20Home%20Engineering%20Challenge/_apis/build/status/kwkraus.TakeHomeEngineeringChallenge?branchName=master)](https://dev.azure.com/kkraus/Take%20Home%20Engineering%20Challenge/_build/latest?definitionId=19&branchName=master)
