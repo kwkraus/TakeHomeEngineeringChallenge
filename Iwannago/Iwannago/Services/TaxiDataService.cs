@@ -24,12 +24,18 @@ namespace Iwannago.Services
             //var tripDate = new TripDateSpecification(options.TripDate);
             //var specification = taxiType.And(tripDate);
 
-            var spec = new TaxiDataSpecification(options.TripDate, options.TaxiType);
+            var spec = new TaxiDataSpecification(
+                options.From,
+                options.To,
+                options.TripDate, 
+                options.TaxiType);
 
             var results = _repo.GetList(spec);
             _logger.LogInformation($"results returned = {results.Count}");
-            return null;
 
+            //TODO: calculate statistics for queried results and map to TaxiTripStats to display
+
+            return null;
         }
     }
 }
