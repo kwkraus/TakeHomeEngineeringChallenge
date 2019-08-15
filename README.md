@@ -11,6 +11,10 @@ Data Access is accomplished using Entity Framework Core backended with SQL Serve
 
 `dotnet IWannago.dll inataxi --From 0 --To 44 --In Yellow -Date 1/1/2018`
 
+`dotnet IWannago.dll inataxi --From 0 --To 44 --In Green -Date 1/1/2018`
+
+`dotnet IWannago.dll inataxi --From 0 --To 44 --In ForHireVehicle -Date 1/24/2018`
+
 ## How it runs
 In order to run the application locally, you need to download and unzip the [Test Data](https://sqlvakjnqkwpjkvio2.blob.core.windows.net/takehomeengineeringchallenge/tripdata.zip) into a folder called DataFiles in your Documents folder. (e.g c:\users\kkraus.NORTHAMERICA\Documents\DataFiles\*.csv)
 
