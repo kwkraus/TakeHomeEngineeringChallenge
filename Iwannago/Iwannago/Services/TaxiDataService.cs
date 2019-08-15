@@ -1,11 +1,10 @@
 ﻿using Iwannago.Data.Core.Interfaces;
+using Iwannago.Data.Core.Specifications;
 using Iwannago.Data.EntityFrameworkCore.Models;
-using Iwannago.Enums;
 using Iwannago.Models;
 using Iwannago.Options;
 using Iwannago.Specifications;
 using Microsoft.Extensions.Logging;
-using System;
 
 namespace Iwannago.Services
 {
@@ -22,7 +21,13 @@ namespace Iwannago.Services
 
         public TaxiTripStats CalculateTaxiDailyStats(InATaxiOptions options)
         {
-            var results = _repo.GetList(new TaxiDataSpecification(options.TripDate, options.TaxiType));
+            var taxiType = new TaxiTypeSpecification(options.TaxiType);
+            var tripDate = new TripDateSpecification(options.TripDate);
+            Specification<TaxiCabTrip> specification = taxiType.And(tripDate);
+
+            var spec = new TaxiDataSpecification(options.TripDate, options.TaxiType);
+
+            var results = _repo.GetList(spec);
             _logger.LogInformation($"results returned = {results.Count}");
             return null;
 
