@@ -1,5 +1,5 @@
-﻿using Iwannago.Data.Core.Specifications;
-using Iwannago.Data.EntityFrameworkCore.Models;
+﻿using Iwannago.Data.Core.Models;
+using Iwannago.Data.Core.Specifications;
 using System;
 using System.Linq.Expressions;
 

@@ -1,5 +1,5 @@
 ﻿using CommandLine;
-using Iwannago.Enums;
+using Iwannago.Data.Core.Enums;
 using System;
 
 namespace Iwannago.Options

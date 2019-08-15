@@ -1,7 +1,6 @@
-﻿using Iwannago.Data.Core.Models;
-using System;
+﻿using System;
 
-namespace Iwannago.Data.EntityFrameworkCore.Models
+namespace Iwannago.Data.Core.Models
 {
     public class TaxiCabTrip : BaseEntity
     {

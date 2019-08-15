@@ -1,6 +1,6 @@
-﻿using Iwannago.Data.Core.Specifications;
-using Iwannago.Data.EntityFrameworkCore.Models;
-using Iwannago.Enums;
+﻿using Iwannago.Data.Core.Enums;
+using Iwannago.Data.Core.Models;
+using Iwannago.Data.Core.Specifications;
 using System;
 using System.Linq.Expressions;
 

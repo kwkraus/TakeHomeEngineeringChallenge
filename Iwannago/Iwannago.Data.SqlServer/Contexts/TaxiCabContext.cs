@@ -1,4 +1,4 @@
-﻿using Iwannago.Data.EntityFrameworkCore.Models;
+﻿using Iwannago.Data.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Iwannago.Data.EntityFrameworkCore.Contexts

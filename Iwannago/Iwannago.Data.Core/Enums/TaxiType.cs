@@ -1,4 +1,4 @@
-﻿namespace Iwannago.Enums
+﻿namespace Iwannago.Data.Core.Enums
 {
     public enum TaxiType
     {

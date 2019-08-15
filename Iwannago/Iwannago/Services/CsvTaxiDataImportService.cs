@@ -1,7 +1,7 @@
 ﻿using CsvHelper;
+using Iwannago.Data.Core.Enums;
 using Iwannago.Data.Core.Interfaces;
-using Iwannago.Data.EntityFrameworkCore.Models;
-using Iwannago.Enums;
+using Iwannago.Data.Core.Models;
 using Iwannago.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;

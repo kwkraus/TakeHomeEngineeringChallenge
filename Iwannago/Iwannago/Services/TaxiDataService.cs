@@ -1,6 +1,5 @@
 ﻿using Iwannago.Data.Core.Interfaces;
-using Iwannago.Data.Core.Specifications;
-using Iwannago.Data.EntityFrameworkCore.Models;
+using Iwannago.Data.Core.Models;
 using Iwannago.Models;
 using Iwannago.Options;
 using Iwannago.Specifications;
@@ -21,9 +20,9 @@ namespace Iwannago.Services
 
         public TaxiTripStats CalculateTaxiDailyStats(InATaxiOptions options)
         {
-            var taxiType = new TaxiTypeSpecification(options.TaxiType);
-            var tripDate = new TripDateSpecification(options.TripDate);
-            Specification<TaxiCabTrip> specification = taxiType.And(tripDate);
+            //var taxiType = new TaxiTypeSpecification(options.TaxiType);
+            //var tripDate = new TripDateSpecification(options.TripDate);
+            //var specification = taxiType.And(tripDate);
 
             var spec = new TaxiDataSpecification(options.TripDate, options.TaxiType);
 

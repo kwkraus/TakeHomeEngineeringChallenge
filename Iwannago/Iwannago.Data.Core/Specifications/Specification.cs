@@ -14,14 +14,14 @@ namespace Iwannago.Data.Core.Specifications
 
         public abstract Expression<Func<T, bool>> ToExpression();
 
-        public Specification<T> And(Specification<T> specification)
+        public Specification<T> And(Specification<T> spec)
         {
-            return new AndSpecification<T>(this, specification);
+            return new AndSpecification<T>(this, spec);
         }
 
-        public Specification<T> Or(Specification<T> specification)
+        public Specification<T> Or(Specification<T> spec)
         {
-            return new OrSpecification<T>(this, specification);
+            return new OrSpecification<T>(this, spec);
         }
 
         public Specification<T> Not()
@@ -30,7 +30,7 @@ namespace Iwannago.Data.Core.Specifications
         }
     }
 
-    internal sealed class AndSpecification<T> :Specification<T>
+    internal sealed class AndSpecification<T> : Specification<T>
     {
         private readonly Specification<T> _left;
         private readonly Specification<T> _right;
