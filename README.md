@@ -3,14 +3,24 @@ This project is my attempt to complete the following challenge
 https://github.com/seushermsft/Take-Home-Engineering-Challenge
 
 ## How it works
-This solution is implemented as a .NET Core CLI with several other supporting projects.
+The Iwannago solution is implemented as a .NET Core CLI that uses a subset of the New York Taxi and Limousine Commission taxi trip data set.  The data originates from 3 different .csv files provided by the NY TLC, For Hire Vehicle data (FHV), Yellow taxi data, and Green taxi data.
 
-![alt text](https://github.com/kwkraus/TakeHomeEngineeringChallenge/blob/master/images/SolutionExplorerView.png "Solution Explorer View")
+Data Access is accomplished using Entity Framework Core backended with SQL Server (LocalDb).  The Repository pattern was followed that utilizes a .NET implementation of the [Specification Pattern](https://www.martinfowler.com/apsupp/spec.pdf) for creating a centralized abstraction for search criteria.
 
-Data Access is accomplished using Entity Framework Core backended with SQL Server (LocalDb)
+The solution implements .NET Core's implementation of Dependency Injection and Logging Framework using the NLog provider.
 
-### Import Data command
-The *.csv files that contain the data must be inserted into the LocalDb database.  These files can contain many millions of rows of data.  Because of this volume, the application requires a `--Count` switch to limit the number of rows imported for a particular file.  The following commands are used to accomplish this.
+There are two main commands for this CLI:
+
+- __Import Command__ :  Because this application is meant to be "self-contained", it has an import command that allows the user to import a predfined number trip rows from each dataset.  The goal of this method is to import as much data as is necessary to return a relevant result set.  __NOTE:__ due to time constraints the import process is time consuming.  It is recommended to import only 5000 rows or less from each dataset.
+
+- __InATaxi Command__ : This command is the main command for defining filter criteria and executing a search against the data.
+
+
+
+### Import command
+Before the InATaxi command can be executed, you need to import the data into your SQL LocalDb.  The *.csv files that contain the data are provided in the link below.  These files can contain many millions of rows of data.  Because of this volume, the application requires a `--Count` switch to limit the number of rows imported for a particular file.  The following commands are used to accomplish this.
+
+
 
 
 `dotnet IWannago.dll import --Type Yellow --Count 1000`
@@ -21,6 +31,7 @@ The *.csv files that contain the data must be inserted into the LocalDb database
 
 
 ### InATaxi command
+Once the test data has been imported into the database, the InATaxi command can be used to query taxi trip statistics for an individual day `--Date`, for a specific taxi type `--In`, from a pickup location `--From` and a dropoff location `--To`
 
 `dotnet IWannago.dll inataxi --From 0 --To 44 --In Yellow -Date 1/1/2018`
 
