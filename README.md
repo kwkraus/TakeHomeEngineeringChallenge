@@ -9,6 +9,19 @@ This solution is implemented as a .NET Core CLI with several other supporting pr
 
 Data Access is accomplished using Entity Framework Core backended with SQL Server (LocalDb)
 
+### Import Data command
+The *.csv files that contain the data must be inserted into the LocalDb database.  These files can contain many millions of rows of data.  Because of this volume, the application requires a `--Count` switch to limit the number of rows imported for a particular file.  The following commands are used to accomplish this.
+
+
+`dotnet IWannago.dll import --Type Yellow --Count 1000`
+
+`dotnet IWannago.dll import --Type Green --Count 1000`
+
+`dotnet IWannago.dll import --Type ForHireVehicle --Count 1000`
+
+
+### InATaxi command
+
 `dotnet IWannago.dll inataxi --From 0 --To 44 --In Yellow -Date 1/1/2018`
 
 `dotnet IWannago.dll inataxi --From 0 --To 44 --In Green -Date 1/1/2018`
