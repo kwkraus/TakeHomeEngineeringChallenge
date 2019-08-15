@@ -3,7 +3,7 @@
 namespace Iwannago.Options
 {
     [Verb("import", HelpText = "Import Taxi data for searching.")]
-    class ImportOptions
+    public class ImportOptions
     {
         [Option('c', "Count", Required = true, HelpText = "Number of TaxiTrip records to load.")]
         public int Count { get; set; }

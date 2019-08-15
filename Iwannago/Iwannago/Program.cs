@@ -33,11 +33,12 @@ namespace Iwannago
                 {
                     var repo = servicesProvider.GetRequiredService<IRepository<TaxiCabTrip>>();
                     var importSvc = servicesProvider.GetRequiredService<ITaxiDataImportService>();
+                    var taxiDataSvc = servicesProvider.GetRequiredService<ITaxiDataService>();
 
                     return Parser.Default.ParseArguments<ImportOptions, InATaxiOptions>(args)
                        .MapResult(
                              (ImportOptions opts) => RunImportCommand(opts, importSvc),
-                             (InATaxiOptions opts) => RunGoCommand(opts, repo, logger),
+                             (InATaxiOptions opts) => RunGoCommand(opts, taxiDataSvc),
                              (IEnumerable<Error> errs) => 1);
                 }
             }
@@ -85,9 +86,9 @@ namespace Iwannago
             return 0;
         }
 
-        static int RunGoCommand(InATaxiOptions options, IRepository<TaxiCabTrip> repof, Logger logger)
+        static int RunGoCommand(InATaxiOptions options, ITaxiDataService svc)
         {
-            logger.Info("Go was entered");
+            var results = svc.CalculateTaxiDailyStats(options);
             return 0;
         }
 
@@ -102,6 +103,7 @@ namespace Iwannago
 
                 .AddTransient(typeof(IRepository<>), typeof(EFRepository<>))
                 .AddTransient(typeof(ITaxiDataImportService), typeof(CsvTaxiDataImportService))
+                .AddTransient(typeof(ITaxiDataService), typeof(TaxiDataService))
                 .AddLogging(loggingBuilder =>
                 {
                     // configure Logging with NLog

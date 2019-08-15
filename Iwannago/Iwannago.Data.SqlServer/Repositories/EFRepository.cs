@@ -1,19 +1,22 @@
 ﻿using Iwannago.Data.Core.Interfaces;
 using Iwannago.Data.Core.Models;
+using Iwannago.Data.Core.Specifications;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Iwannago.Data.EntityFrameworkCore.Repositories
 {
     public class EFRepository<T> : IRepository<T> where T : BaseEntity
     {
         protected readonly DbContext _context;
-        protected DbSet<T> DbSet;
+        protected DbSet<T> _dbSet;
 
         public EFRepository (DbContext context)
         {
             _context = context;
-            DbSet = context.Set<T>();
+            _dbSet = context.Set<T>();
         }
 
         public void Delete(T entity)
@@ -24,12 +27,17 @@ namespace Iwannago.Data.EntityFrameworkCore.Repositories
 
         public T Get(Guid id)
         {
-            return DbSet.Find(id);
+            return _dbSet.Find(id);
+        }
+
+        public IReadOnlyList<T> GetList(Specification<T> spec)
+        {
+            return _dbSet.Where(spec.ToExpression()).ToList();
         }
 
         public void Insert(T entity)
         {
-            DbSet.Add(entity);
+            _dbSet.Add(entity);
             _context.SaveChanges();
         }
 
