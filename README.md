@@ -40,6 +40,21 @@ Once the test data has been imported into the database, the InATaxi command can 
 `dotnet IWannago.dll inataxi --From 0 --To 44 --In ForHireVehicle -Date 1/24/2018`
 
 ## How it runs
-In order to run the application locally, you need to download and unzip the [Test Data](https://sqlvakjnqkwpjkvio2.blob.core.windows.net/takehomeengineeringchallenge/tripdata.zip) into a folder called DataFiles in your Documents folder. (e.g c:\users\kkraus.NORTHAMERICA\Documents\DataFiles\\*.csv)
+In order to run the application locally, you need to download and unzip the [Test Data](https://sqlvakjnqkwpjkvio2.blob.core.windows.net/takehomeengineeringchallenge/tripdata.zip) into a folder called DataFiles in your Documents folder. (e.g c:\users\kkraus.NORTHAMERICA\Documents\DataFiles\\*.csv).
+
+Because this solution utilizes Entity Framework Core Code First implementation, it is required to apply EF migrations to create the database schema.
+
+Run the following commands to create the database in your LocalDb store.
+
+`dotnet ef migrations add init --project Iwannago.Api`
+
+`dotnet ef database update --project Iwannago.Api`
+
+__NOTE:__ the Iwannago.Api project had grand aspirations that were not to be.  But it still does have a purpose.  the EF migrations work very well on ASP.NET Core projects, so this is the target project that will be used to run the EF migrations.
+
+Once the database has successfully been created, run the Import commands, outlined above, to start the data import and begin searching for data.
+
+
+## Project Status
 
 [![Build Status](https://dev.azure.com/kkraus/Take%20Home%20Engineering%20Challenge/_apis/build/status/kwkraus.TakeHomeEngineeringChallenge?branchName=master)](https://dev.azure.com/kkraus/Take%20Home%20Engineering%20Challenge/_build/latest?definitionId=19&branchName=master)
