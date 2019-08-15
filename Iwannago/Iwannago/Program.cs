@@ -3,6 +3,7 @@ using Iwannago.Data.Core.Interfaces;
 using Iwannago.Data.EntityFrameworkCore.Contexts;
 using Iwannago.Data.EntityFrameworkCore.Models;
 using Iwannago.Data.EntityFrameworkCore.Repositories;
+using Iwannago.Enums;
 using Iwannago.Options;
 using Iwannago.Services;
 using Microsoft.EntityFrameworkCore;
@@ -65,17 +66,17 @@ namespace Iwannago
                 throw new ArgumentNullException(nameof(importSvc));
 
             //check what user entered for TaxiType and load appropriate dataset
-            switch(options.TaxiType.ToLower())
+            switch(options.TaxiType)
             {
-                case "fhv":
+                case TaxiType.ForHireVehicle:
                     importSvc.LoadForHireVehicle(options.Count);
                     break;
 
-                case "yellow":
+                case TaxiType.Yellow:
                     importSvc.LoadYellowTaxi(options.Count);
                     break;
 
-                case "green":
+                case TaxiType.Green:
                     importSvc.LoadGreenTaxi(options.Count);
                     break;
 
@@ -95,12 +96,12 @@ namespace Iwannago
         private static IServiceProvider BuildDi(IConfiguration config)
         {
             var connStr = config.GetConnectionString("DefaultConnection");
-            Console.WriteLine(connStr);
 
             return new ServiceCollection()
                 .AddDbContext<DbContext, TaxiCabContext>(options =>
                     options.UseSqlServer(connStr))
 
+                .Configure<TaxiDataOptions>(options => config.GetSection("TaxiDataFiles").Bind(options))
                 .AddTransient(typeof(IRepository<>), typeof(EFRepository<>))
                 .AddTransient(typeof(ITaxiDataImportService), typeof(CsvTaxiDataImportService))
                 .AddTransient(typeof(ITaxiDataService), typeof(TaxiDataService))
@@ -110,6 +111,8 @@ namespace Iwannago
                     loggingBuilder.ClearProviders();
                     loggingBuilder.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
                     loggingBuilder.AddNLog(config);
+                    loggingBuilder.AddFilter("Microsoft.EntityFrameworkCore.Database.Command", Microsoft.Extensions.Logging.LogLevel.Warning);
+                    loggingBuilder.AddFilter("Microsoft.EntityFrameworkCore.Infrastructure", Microsoft.Extensions.Logging.LogLevel.Warning);
                 })
                 .BuildServiceProvider();
         }

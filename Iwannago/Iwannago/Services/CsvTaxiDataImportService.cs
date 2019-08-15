@@ -1,8 +1,10 @@
 ﻿using CsvHelper;
 using Iwannago.Data.Core.Interfaces;
 using Iwannago.Data.EntityFrameworkCore.Models;
+using Iwannago.Enums;
 using Iwannago.Models;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Globalization;
 using System.IO;
@@ -14,13 +16,16 @@ namespace Iwannago.Services
     {
         private readonly IRepository<TaxiCabTrip> _repo;
         private readonly ILogger<CsvTaxiDataImportService> _logger;
+        private readonly TaxiDataOptions _options;
 
         public CsvTaxiDataImportService(
             IRepository<TaxiCabTrip> repo,
-            ILogger<CsvTaxiDataImportService> logger)
+            ILogger<CsvTaxiDataImportService> logger,
+            IOptions<TaxiDataOptions> options)
         {
             _repo = repo;
             _logger = logger;
+            _options = options.Value;
         }
 
         public void LoadForHireVehicle(int numberOfRows = 0)
@@ -32,7 +37,7 @@ namespace Iwannago.Services
             var result = 0;
 
             using (var reader = new StreamReader(
-                $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\DataFiles\\fhv_tripdata_2018-01.csv"))
+                $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\DataFiles\\{_options.FHV}"))
             {
                 using (var csv = new CsvReader(reader))
                 {
@@ -43,7 +48,7 @@ namespace Iwannago.Services
                         var trip = new TaxiCabTrip
                         {
                             Id = Guid.NewGuid(),
-                            TaxiType = "FHV",
+                            TaxiType = Enum.GetName(typeof(TaxiType), TaxiType.ForHireVehicle),
                             VendorID = row.Dispatching_base_num,
                             pickup_datetime = row.Pickup_DateTime,
                             dropoff_datetime = row.DropOff_datetime,
@@ -85,7 +90,7 @@ namespace Iwannago.Services
             var result = 0;
 
             using (var reader = new StreamReader(
-                $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\DataFiles\\green_tripdata_2018-01.csv"))
+                $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\DataFiles\\{_options.Green}"))
             {
                 using (var csv = new CsvReader(reader))
                 {
@@ -96,7 +101,7 @@ namespace Iwannago.Services
                         var trip = new TaxiCabTrip
                         {
                             Id = Guid.NewGuid(),
-                            TaxiType = "Green",
+                            TaxiType = Enum.GetName(typeof(TaxiType), TaxiType.Green),
                             VendorID = row.VendorID,
                             pickup_datetime = DateTime.TryParseExact(row.lpep_pickup_datetime, "M/d/yyyy H:mm", new CultureInfo("en-US"), DateTimeStyles.None, out DateTime puDateTime) ? puDateTime : default,
                             dropoff_datetime = DateTime.TryParseExact(row.lpep_dropoff_datetime, "M/d/yyyy H:mm", new CultureInfo("en-US"), DateTimeStyles.None, out DateTime doDateTime) ? doDateTime : default,
@@ -138,7 +143,7 @@ namespace Iwannago.Services
             var result = 0;
 
             using (var reader = new StreamReader(
-                $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\DataFiles\\yellow_tripdata_2018-01.csv"))
+                $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\DataFiles\\{_options.Yellow}"))
             {
                 using (var csv = new CsvReader(reader))
                 {
@@ -149,7 +154,7 @@ namespace Iwannago.Services
                         var trip = new TaxiCabTrip
                         {
                             Id = Guid.NewGuid(),
-                            TaxiType = "Yellow",
+                            TaxiType = Enum.GetName(typeof(TaxiType), TaxiType.Yellow),
                             VendorID = row.VendorID,
                             pickup_datetime = DateTime.TryParseExact(row.tpep_pickup_datetime, "M/d/yyyy H:mm", new CultureInfo("en-US"), DateTimeStyles.None, out DateTime puDateTime) ? puDateTime : default,
                             dropoff_datetime = DateTime.TryParseExact(row.tpep_dropoff_datetime, "M/d/yyyy H:mm", new CultureInfo("en-US"), DateTimeStyles.None, out DateTime doDateTime) ? doDateTime : default,
