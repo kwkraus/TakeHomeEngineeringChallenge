@@ -1,4 +1,4 @@
-﻿namespace Iwannago
+﻿namespace Iwannago.Options
 {
     public class TaxiDataOptions
     {

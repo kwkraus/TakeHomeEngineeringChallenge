@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Iwannago.Data.EntityFramewo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Iwannago.Data.Core", "Iwannago.Data.Core\Iwannago.Data.Core.csproj", "{61A7EAD5-33C8-4BAB-A03F-87E02C438845}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IWannago.Api.Tests", "IWannago.Api.Tests\IWannago.Api.Tests.csproj", "{E0D0CE2C-597B-410C-B611-B1CCFF550254}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{61A7EAD5-33C8-4BAB-A03F-87E02C438845}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61A7EAD5-33C8-4BAB-A03F-87E02C438845}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61A7EAD5-33C8-4BAB-A03F-87E02C438845}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0D0CE2C-597B-410C-B611-B1CCFF550254}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0D0CE2C-597B-410C-B611-B1CCFF550254}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0D0CE2C-597B-410C-B611-B1CCFF550254}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0D0CE2C-597B-410C-B611-B1CCFF550254}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

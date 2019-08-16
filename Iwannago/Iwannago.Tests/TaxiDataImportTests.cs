@@ -3,10 +3,10 @@ using Xunit;
 
 namespace Iwannago.Tests
 {
-    public class UnitTest1
+    public class TaxiDataImportTests
     {
         [Fact]
-        public void Test1()
+        public void Import_Yellow_Taxi_Data()
         {
 
         }
