@@ -44,9 +44,7 @@ In order to run the application locally, you need to download and unzip the [Tes
 
 Because this solution utilizes Entity Framework Core Code First implementation, it is required to apply EF migrations to create the database schema.
 
-Run the following commands to create the database in your LocalDb store.
-
-`dotnet ef migrations add init --project Iwannago.Api`
+Run the following command to create the database in your LocalDb store.
 
 `dotnet ef database update --project Iwannago.Api`
 
