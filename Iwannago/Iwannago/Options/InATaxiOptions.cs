@@ -16,7 +16,7 @@ namespace Iwannago.Options
         [Option('i', "In", Required = true, HelpText = "Type of taxi. 'Yellow', 'Green', 'ForHireVehicle'")]
         public TaxiType TaxiType { get; set; }
 
-        [Option('d', "Date", Required = true, HelpText = "Date of trip data you are looking for")]
+        [Option('o', "On", Required = true, HelpText = "Date of trip data you are looking for")]
         public DateTime TripDate { get; set; }
 
     }

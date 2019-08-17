@@ -15,6 +15,12 @@ namespace Iwannago.Data.EntityFrameworkCore.Contexts
         {
             modelBuilder.Entity<TaxiCabTrip>()
                 .HasIndex(b => b.TaxiType);
+
+            modelBuilder.Entity<TaxiCabTrip>()
+                .HasIndex(i => i.pickup_datetime);
+
+            modelBuilder.Entity<TaxiCabTrip>()
+                .HasIndex(i => i.dropoff_datetime);
                 
             modelBuilder.Entity<TaxiCabTrip>()
                 .Property(b => b.extra).HasColumnType("decimal");
@@ -46,7 +52,7 @@ namespace Iwannago.Data.EntityFrameworkCore.Contexts
         {
             if (!optionsBuilder.IsConfigured)
             {
-                //optionsBuilder.UseInMemoryDatabase("taxitrips");
+                optionsBuilder.UseInMemoryDatabase("taxitrips");
                 //optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFProviders.InMemory;Trusted_Connection=True;ConnectRetryCount=0");
             }
         }
