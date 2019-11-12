@@ -14,12 +14,13 @@ using NLog;
 using NLog.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Iwannago
 {
     class Program
     {
-        static int Main(string[] args)
+        static void Main(string[] args)
         {
             var logger = LogManager.GetCurrentClassLogger();
             try
@@ -36,11 +37,13 @@ namespace Iwannago
                     var importSvc = servicesProvider.GetRequiredService<ITaxiDataImportService>();
                     var taxiDataSvc = servicesProvider.GetRequiredService<ITaxiDataService>();
 
-                    return Parser.Default.ParseArguments<ImportOptions, InATaxiOptions>(args)
+                    Parser.Default.ParseArguments<ImportOptions, InATaxiOptions>(args)
                        .MapResult(
                              (ImportOptions opts) => RunImportCommand(opts, importSvc),
                              (InATaxiOptions opts) => RunGoCommand(opts, taxiDataSvc),
                              (IEnumerable<Error> errs) => 1);
+
+                    Console.Read();
                 }
             }
             catch (Exception ex)
@@ -69,15 +72,15 @@ namespace Iwannago
             switch(options.TaxiType)
             {
                 case TaxiType.ForHireVehicle:
-                    importSvc.LoadForHireVehicle(options.Count);
+                    Task.Run(async () => await importSvc.LoadForHireVehicleAsync(options.Count));
                     break;
 
                 case TaxiType.Yellow:
-                    importSvc.LoadYellowTaxi(options.Count);
+                    Task.Run(async () => await importSvc.LoadYellowTaxiAsync(options.Count));
                     break;
 
                 case TaxiType.Green:
-                    importSvc.LoadGreenTaxi(options.Count);
+                    Task.Run(async () => await importSvc.LoadGreenTaxiAsync(options.Count));
                     break;
 
                 default:
@@ -89,7 +92,7 @@ namespace Iwannago
 
         static int RunGoCommand(InATaxiOptions options, ITaxiDataService svc)
         {
-            var results = svc.CalculateTaxiDailyStats(options);
+            var results = Task.Run(async () => await svc.CalculateTaxiDailyStatsAsync(options) );
             return 0;
         }
 

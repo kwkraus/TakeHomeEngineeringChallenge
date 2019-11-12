@@ -1,10 +1,11 @@
 ﻿using Iwannago.Models;
 using Iwannago.Options;
+using System.Threading.Tasks;
 
 namespace Iwannago.Services
 {
     public interface ITaxiDataService
     {
-        TaxiTripStats CalculateTaxiDailyStats(InATaxiOptions options);
+        Task<TaxiTripStats> CalculateTaxiDailyStatsAsync(InATaxiOptions options);
     }
 }

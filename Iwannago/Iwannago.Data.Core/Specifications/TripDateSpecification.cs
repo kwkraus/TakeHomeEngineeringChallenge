@@ -1,11 +1,10 @@
 ﻿using Iwannago.Data.Core.Models;
-using Iwannago.Data.Core.Specifications;
 using System;
 using System.Linq.Expressions;
 
-namespace Iwannago.Specifications
+namespace Iwannago.Data.Core.Specifications
 {
-    public sealed class TripDateSpecification : Specification<TaxiCabTrip>
+    public class TripDateSpecification : Specification<TaxiCabTrip>
     {
         private readonly DateTime _pickupDate;
 
@@ -16,7 +15,7 @@ namespace Iwannago.Specifications
 
         public override Expression<Func<TaxiCabTrip, bool>> ToExpression()
         {
-            return TaxiCabTrip => TaxiCabTrip.pickup_datetime.Date == _pickupDate.Date;
+            return taxiCabTrip => taxiCabTrip.pickup_datetime.Date == _pickupDate.Date;
         }
     }
 }

@@ -1,12 +1,12 @@
-﻿using Iwannago.Data.Core.Models;
-using Iwannago.Data.Core.Specifications;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Iwannago.Data.Core.Models;
+using Iwannago.Data.Core.Specifications;
 
-namespace Iwannago.Data.Core.Interfaces
+namespace Iwannago.Data.EntityFrameworkCore.Repositories
 {
-    public interface IRepository<T> where T : BaseEntity
+    public interface IEFRepository<T> where T : BaseEntity
     {
         Task DeleteAsync(T entity);
         Task<T> GetAsync(Guid id);

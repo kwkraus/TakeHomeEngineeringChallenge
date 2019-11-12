@@ -10,6 +10,7 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Iwannago.Services
 {
@@ -29,7 +30,7 @@ namespace Iwannago.Services
             _options = options.Value;
         }
 
-        public void LoadForHireVehicle(int numberOfRows = 0)
+        public async Task LoadForHireVehicleAsync(int numberOfRows = 0)
         {
             //validate input
             if (numberOfRows == 0)
@@ -71,7 +72,7 @@ namespace Iwannago.Services
                             trip_type = default
                         };
 
-                        _repo.Insert(trip);
+                        await _repo.InsertAsync(trip);
 
                         result++;
                         _logger.LogInformation($"Inserted: {result}");
@@ -82,7 +83,7 @@ namespace Iwannago.Services
             }
         }
 
-        public void LoadGreenTaxi(int numberOfRows)
+        public async Task LoadGreenTaxiAsync(int numberOfRows)
         {
             //validate input
             if (numberOfRows == 0)
@@ -124,7 +125,7 @@ namespace Iwannago.Services
                             trip_type = row.trip_type
                         };
 
-                        _repo.Insert(trip);
+                        await _repo.InsertAsync(trip);
 
                         result++;
                         _logger.LogInformation($"Inserted: {result}");
@@ -135,7 +136,7 @@ namespace Iwannago.Services
             }
         }
 
-        public void LoadYellowTaxi(int numberOfRows)
+        public async Task LoadYellowTaxiAsync(int numberOfRows)
         {
             //validate input
             if (numberOfRows == 0)
@@ -177,7 +178,7 @@ namespace Iwannago.Services
                             trip_type = default
                         };
 
-                        _repo.Insert(trip);
+                        await _repo.InsertAsync(trip);
 
                         result++;
                         _logger.LogInformation($"Inserted: {result}");

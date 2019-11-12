@@ -1,9 +1,11 @@
-﻿namespace Iwannago.Data.Core.Interfaces
+﻿using System.Threading.Tasks;
+
+namespace Iwannago.Data.Core.Interfaces
 {
     public interface ITaxiDataImportService
     {
-        void LoadForHireVehicle(int numberOfRows);
-        void LoadYellowTaxi(int numberOfRows);
-        void LoadGreenTaxi(int numberOfRows);
+        Task LoadForHireVehicleAsync(int numberOfRows);
+        Task LoadYellowTaxiAsync(int numberOfRows);
+        Task LoadGreenTaxiAsync(int numberOfRows);
     }
 }

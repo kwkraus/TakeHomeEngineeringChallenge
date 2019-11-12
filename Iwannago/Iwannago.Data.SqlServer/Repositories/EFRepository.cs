@@ -5,46 +5,52 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Iwannago.Data.EntityFrameworkCore.Repositories
 {
     public class EFRepository<T> : IRepository<T> where T : BaseEntity
     {
         protected readonly DbContext _context;
-        protected DbSet<T> _dbSet;
+        protected DbSet<T> _entities;
 
-        public EFRepository (DbContext context)
+        public EFRepository(DbContext context)
         {
             _context = context;
-            _dbSet = context.Set<T>();
+            _entities = context.Set<T>();
         }
 
-        public void Delete(T entity)
+        public async Task DeleteAsync(T entity)
         {
             _context.Remove<T>(entity);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public T Get(Guid id)
+        public async Task<T> GetAsync(Guid id)
         {
-            return _dbSet.Find(id);
+            return await _entities.FindAsync(id);
         }
 
-        public IReadOnlyList<T> GetList(Specification<T> spec)
+        public async Task<IReadOnlyList<T>> GetListAsync(Specification<T> spec)
         {
-            return _dbSet.Where(spec.ToExpression()).ToList();
+            return await _entities.Where(spec.ToExpression()).ToListAsync();
         }
 
-        public void Insert(T entity)
+        public async Task InsertAsync(T entity)
         {
-            _dbSet.Add(entity);
-            _context.SaveChanges();
+            await _entities.AddAsync(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public void Update(T entity)
+        public async Task UpdateAsync(T entity)
         {
-            _context.Update<T>(entity);
-            _context.SaveChanges();
+            var entityToEdit = _entities.Find(entity.Id);
+
+            if (entityToEdit == null)
+                throw new ArgumentException($"Couldn't find matching {nameof(T)} with Id={entity.Id}");
+
+            _context.Entry(entityToEdit).CurrentValues.SetValues(entity);
+            await _context.SaveChangesAsync();
         }
     }
 }
