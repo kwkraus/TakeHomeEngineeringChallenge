@@ -93,6 +93,9 @@ namespace Iwannago
         static int RunGoCommand(InATaxiOptions options, ITaxiDataService svc)
         {
             var results = Task.Run(async () => await svc.CalculateTaxiDailyStatsAsync(options) );
+
+            Console.WriteLine();
+
             return 0;
         }
 

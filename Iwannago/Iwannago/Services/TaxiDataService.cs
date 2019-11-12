@@ -31,8 +31,9 @@ namespace Iwannago.Services
             _logger.LogInformation($"results returned = {results.Count}");
 
             //TODO: calculate statistics for queried results and map to TaxiTripStats to display
+            TaxiTripStats stats = new TaxiTripStats();
 
-            return null;
+            return stats;
         }
     }
 }

@@ -22,29 +22,29 @@ namespace Iwannago.Data.EntityFrameworkCore.Contexts
             modelBuilder.Entity<TaxiCabTrip>()
                 .HasIndex(i => i.dropoff_datetime);
                 
-            modelBuilder.Entity<TaxiCabTrip>()
-                .Property(b => b.extra).HasColumnType("decimal");
+            //modelBuilder.Entity<TaxiCabTrip>()
+            //    .Property(b => b.extra).HasColumnType("decimal");
 
-            modelBuilder.Entity<TaxiCabTrip>()
-                .Property(b => b.mta_tax).HasColumnType("decimal");
+            //modelBuilder.Entity<TaxiCabTrip>()
+            //    .Property(b => b.mta_tax).HasColumnType("decimal");
 
-            modelBuilder.Entity<TaxiCabTrip>()
-                .Property(b => b.tolls_amount).HasColumnType("decimal");
+            //modelBuilder.Entity<TaxiCabTrip>()
+            //    .Property(b => b.tolls_amount).HasColumnType("decimal");
 
-            modelBuilder.Entity<TaxiCabTrip>()
-                .Property(b => b.total_amount).HasColumnType("decimal");
+            //modelBuilder.Entity<TaxiCabTrip>()
+            //    .Property(b => b.total_amount).HasColumnType("decimal");
 
-            modelBuilder.Entity<TaxiCabTrip>()
-                .Property(b => b.fare_amount).HasColumnType("decimal");
+            //modelBuilder.Entity<TaxiCabTrip>()
+            //    .Property(b => b.fare_amount).HasColumnType("decimal");
 
-            modelBuilder.Entity<TaxiCabTrip>()
-                .Property(b => b.improvement_surcharge).HasColumnType("decimal");
+            //modelBuilder.Entity<TaxiCabTrip>()
+            //    .Property(b => b.improvement_surcharge).HasColumnType("decimal");
 
-            modelBuilder.Entity<TaxiCabTrip>()
-                .Property(b => b.trip_distance).HasColumnType("decimal");
+            //modelBuilder.Entity<TaxiCabTrip>()
+            //    .Property(b => b.trip_distance).HasColumnType("decimal");
 
-            modelBuilder.Entity<TaxiCabTrip>()
-                .Property(b => b.tip_amount).HasColumnType("decimal");
+            //modelBuilder.Entity<TaxiCabTrip>()
+            //    .Property(b => b.tip_amount).HasColumnType("decimal");
 
 
         }
